@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    tools {
+        dockerTool 'docker'
+    }
+    stages {
+        stage('Git clone'){
+            steps{
+                git url: 'https://github.com/PavloTarnovetskyi/Onboarding.git', credentialsId: 'github', branch: 'master'
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                dir('/Users/pavlo/.jenkins/workspace/github_Flaskapp/Flaskapp_GitHub'){
+                   sh """
+                    ls -la
+                    pwd
+                    docker build -t flaskapp_jenkins:latest .
+                    docker images
+                    """
+                }
+            } 
+            
+        }
+        stage('Run docker container') {
+            steps {
+                sh 'docker run --name flaskapp_jenkins -d -p5005:5000 flaskapp_jenkins:latest'              
+            } 
+        }
+    }
+}
