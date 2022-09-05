@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                dir('/Users/pavlo/.jenkins/workspace/github_Flaskapp/Flaskapp_GitHub'){
+                dir('/Users/pavlo/.jenkins/workspace/githubSCM_Flaskapp/Flaskapp_GitHub'){
                    sh """
                     ls -la
                     pwd
