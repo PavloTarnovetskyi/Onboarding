@@ -37,8 +37,9 @@ pipeline {
         }
         stage('Create EC2 ubuntu instance on AWS with terraform'){
             steps{
-              dir('/Users/pavlo/Desktop/Onboarding/Demo/terraform'){
+              dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub'){
                    sh """
+                    terraform init
                     terraform apply -auto-approve                    
                     """
                 }
@@ -46,7 +47,7 @@ pipeline {
         }
         stage('Ansible connect and deploy Flaskapp'){
             steps{
-              dir('/Users/pavlo/Desktop/Onboarding/Demo/ansible'){
+              dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub/ansible'){
                    sh """
                      ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml                  
                     """
