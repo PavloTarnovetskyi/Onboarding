@@ -2,6 +2,10 @@ pipeline {
     agent any
     tools {
         dockerTool 'docker'
+        terraform 'terraform'
+    }
+    environment{
+        dockerHubPwd   = credentials('dockerhub_pwd')
     }
     stages {
         stage('Git clone'){
@@ -11,21 +15,44 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                dir('/Users/pavlo/.jenkins/workspace/githubSCM_Flaskapp/Flaskapp_GitHub'){
+                dir('/Users/pavlo/.jenkins/workspace/FlaskappFull/Flaskapp_GitHub'){
                    sh """
-                    ls -la
-                    pwd
-                    docker build -t flaskapp_jenkins:latest .
-                    docker images
+                    docker build -t pavlotarnovetskyi/flaskapp_jenkins .
                     """
                 }
             } 
             
         }
-        stage('Run docker container') {
+        stage('Push docker image to dockerhub & remove image') {
             steps {
-                sh 'docker run --name flaskapp_jenkins -d -p5005:5000 flaskapp_jenkins:latest'              
+                withCredentials([string(credentialsId: 'dockerhub_pwd', variable: 'password_dockerhub')]){
+                    sh "docker login -u pavlotarnovetskyi -p ${env.dockerHubPwd}"
+                    sh '''
+                        docker push pavlotarnovetskyi/flaskapp_jenkins
+                        docker rmi pavlotarnovetskyi/flaskapp_jenkins
+                    ''' 
+                }
+            
             } 
         }
+        stage('Create EC2 ubuntu instance on AWS with terraform'){
+            steps{
+              dir('/Users/pavlo/Desktop/Onboarding/Demo/terraform'){
+                   sh """
+                    terraform apply -auto-approve                    
+                    """
+                }
+            }
+        }
+        stage('Ansible connect and deploy Flaskapp'){
+            steps{
+              dir('/Users/pavlo/Desktop/Onboarding/Demo/ansible'){
+                   sh """
+                     ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml                  
+                    """
+                }
+            }
+        }
+    
     }
 }
