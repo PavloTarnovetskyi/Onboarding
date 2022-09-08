@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                dir('/Users/pavlo/.jenkins/workspace/FlaskappFull/Flaskapp_GitHub'){
+                dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub'){
                    sh """
                     docker build -t pavlotarnovetskyi/flaskapp_jenkins .
                     """
