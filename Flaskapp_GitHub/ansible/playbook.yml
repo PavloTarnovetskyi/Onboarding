@@ -9,7 +9,7 @@
 
   - name: move deploy script for Flaskapp on remote server  
     ansible.builtin.copy:
-      src: /Users/pavlo/Desktop/Onboarding/Demo/ec2docker.sh
+      src: /Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub/ec2docker.sh
       dest: /home/ubuntu
       mode: '775'
       owner: ubuntu
