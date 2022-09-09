@@ -70,5 +70,5 @@ resource "local_file" "public_ip_for_deploy" {
     [terraform_ubuntu]
     ${aws_instance.terraform_ubuntu.public_ip}
       EOT
-      filename = "../ansible/serverIP.txt"
+      filename = "./ansible/serverIP.txt"
       }
