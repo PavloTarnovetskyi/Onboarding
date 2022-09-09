@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Build docker image') {
             steps {
-                dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub'){
+                dir('./Flaskapp_GitHub'){
                    sh """
                     docker build -t pavlotarnovetskyi/flaskapp_jenkins .
                     """
@@ -37,7 +37,7 @@ pipeline {
         }
         stage('Create EC2 ubuntu instance on AWS with terraform'){
             steps{
-              dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub'){
+              dir('./Flaskapp_GitHub'){
                    sh """
                     terraform init
                     terraform apply -auto-approve                    
@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Ansible connect and deploy Flaskapp'){
             steps{
-              dir('/Users/pavlo/.jenkins/workspace/FlaskappFullSCM/Flaskapp_GitHub/ansible'){
+              dir('./Flaskapp_GitHub/ansible'){
                    sh """
                      ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml                  
                     """
