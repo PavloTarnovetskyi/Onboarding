@@ -17,7 +17,7 @@
 - Ansible
 - AWS  
 
-### For deploying that app on AWS EC2 you have to use your AWS account with your AWS user credentials that terraform will use to deploy infrastructure.
+### For deploying that app on AWS EC2 you have to use your AWS account with your AWS user credentials that terraform will use to deploy infrastructure. Don't forget to change the path to your ssh key in ansible (ansible_ssh_private_key_file) for connection with your EC2 instance.
 
 ### Another important thing is to set up Jenkins with the necessary plugins and create a new job that will use a pipeline script from SCM, like in the picture below.
 ![jenkins job1](img/pipeline1.png)
