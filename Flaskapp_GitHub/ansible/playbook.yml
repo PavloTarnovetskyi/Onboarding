@@ -9,7 +9,7 @@
 
   - name: move deploy script for Flaskapp on remote server  
     ansible.builtin.copy:
-      src: ./Flaskapp_GitHub/ansible
+      src: ./Flaskapp_GitHub
       dest: /home/ubuntu
       mode: '775'
       owner: ubuntu
