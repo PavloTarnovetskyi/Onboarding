@@ -5,7 +5,7 @@ pipeline {
         terraform 'terraform'
     }
     environment{
-        dockerHubPwd   = credentials('dockerhub_pwd')
+        dockerHubPwd   = credentials('dockerhub-creds')
     }
     stages {
         stage('Git clone'){
